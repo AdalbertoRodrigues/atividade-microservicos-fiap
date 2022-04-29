@@ -280,7 +280,7 @@ paths:
         in: "formData"
         description: "file to upload"
         required: false
-        type: "file"
+        type: "file" 
       responses:
         "200":
           description: "successful operation"
