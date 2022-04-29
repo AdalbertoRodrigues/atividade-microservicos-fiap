@@ -1,6 +1,6 @@
 swagger: "2.0"
 info:
-  description: "A ideia baseia-se na construção de um dispositivo Arduino que auxiliará as pessoas auditivas a treinarem a fala através de simulação das vibrações das palavras que são feitas pelas cordas vocais do ser humano."
+  description: "A idéia baseia-se na construção de um dispositivo Arduino que auxiliará as pessoas com deficiências auditivas a treinarem a fala através de simulação das vibrações das palavras que são feitas pelas cordas vocais do ser humano."
   version: "1.0.0"
   title: "TDVE - Teaching-Directed Vibration Emitter"
   termsOfService: "http://??????.??/terms/"
@@ -12,23 +12,23 @@ info:
 host: "????????.swagger.io"
 basePath: "/v2"
 tags:
-- name: "vocabulario"
-  description: "base de palavras ou frases que serao aprendidas pelos alunos"
-  
-- name: "palavra_aprendida"
-  description: "todas as palavras que foram aprendidas pelos alunos"
-  
 - name: "user"
   description: "Operacoes sobre usuario"
   
+- name: "vocabulario"
+  description: "Base de palavras ou frases que serao aprendidas pelos alunos"
+  
+- name: "palavra_aprendida"
+  description: "Todas as palavras que foram aprendidas pelos alunos"
+  
 - name: "plano_de_estudo"
-  description: "montagem de plano de estudo pre definido ou montado pelo proprio aluno"
+  description: "Montagem de plano de estudo pre definido ou montado pelo proprio aluno"
   
 - name: "ranking"
-  description: "pontuacao de tarefas para os alunos e incentivo"
+  description: "Pontuacao de tarefas para os alunos e incentivo"
   
 - name: "log"
-  description: "analise de dados em geral a respeito dos alunos"
+  description: "Análise de dados em geral a respeito dos alunos"
   
 schemes:
 - "https"
