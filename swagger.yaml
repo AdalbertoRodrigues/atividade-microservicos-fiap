@@ -240,7 +240,7 @@ paths:
         type: "string"
       - name: "petId"
         in: "path"
-        description: "Pet id to delete"
+        description: "Pet id to delete s2"
         required: true
         type: "integer"
         format: "int64"
