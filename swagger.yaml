@@ -1,29 +1,35 @@
 swagger: "2.0"
 info:
-  description: ""
+  description: "A ideia baseia-se na construção de um dispositivo Arduino que auxiliará as pessoas auditivas a treinarem a fala através de simulação das vibrações das palavras que são feitas pelas cordas vocais do ser humano."
   version: "1.0.0"
-  title: "Swagger Petstore"
-  termsOfService: "http://swagger.io/terms/"
+  title: "TDVE - Teaching-Directed Vibration Emitter"
+  termsOfService: "http://??????.??/terms/"
   contact:
-    email: "apiteam@swagger.io"
+    email: "teste@mao.com"
   license:
     name: "Apache 2.0"
     url: "http://www.apache.org/licenses/LICENSE-2.0.html"
-host: "petstore.swagger.io"
+host: "????????.swagger.io"
 basePath: "/v2"
 tags:
-- name: "pet"
-  description: "Everything about your Pets"
-  externalDocs:
-    description: "Find out more"
-    url: "http://swagger.io"
-- name: "store"
-  description: "Access to Petstore orders"
+- name: "vocabulario"
+  description: "base de palavras ou frases que serao aprendidas pelos alunos"
+  
+- name: "palavra_aprendida"
+  description: "todas as palavras que foram aprendidas pelos alunos"
+  
 - name: "user"
-  description: "Operations about user"
-  externalDocs:
-    description: "Find out more about our store"
-    url: "http://swagger.io"
+  description: "Operacoes sobre usuario"
+  
+- name: "plano_de_estudo"
+  description: "montagem de plano de estudo pre definido ou montado pelo proprio aluno"
+  
+- name: "ranking"
+  description: "pontuacao de tarefas para os alunos e incentivo"
+  
+- name: "log"
+  description: "analise de dados em geral a respeito dos alunos"
+  
 schemes:
 - "https"
 - "http"
@@ -31,7 +37,7 @@ paths:
   /pet:
     post:
       tags:
-      - "pet"
+      - "vocabulario"
       summary: "Add a new pet to the store"
       description: ""
       operationId: "addPet"
