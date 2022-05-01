@@ -12,6 +12,9 @@ info:
 host: "tdve.swagger.io"
 basePath: "/v2"
 tags:
+
+- name: "User"
+  description: "Base de usuários da aplicação. Será utilizada para controle de acesso a informação"
   
 - name: "Vocabulario"
   description: "Base de palavras ou frases que serao aprendidas pelos alunos"
@@ -20,6 +23,125 @@ schemes:
 - "https"
 - "http"
 paths:
+  /User:
+    get:
+      tags: 
+      - "User"
+      summary: "Consulta lista de usuários"
+      description: ""
+      operationId: "getUsers"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "Lista de usuários da aplicação"
+        "403":
+          description: "Acesso Negado"
+    post:
+      tags:
+      - "User"
+      summary: "Adicionar um novo usuário"
+      operationId: "postUser"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Usuário a ser cadastrado"
+        required: true
+        schema:
+          $ref: "#/definitions/User"
+      responses:
+        "200":
+          description: "Usuário adicionado com sucesso"
+        "403":
+          description: "Acesso Negado"
+  /User/{id}:
+    get:
+      tags: 
+      - "User"
+      summary: "Consulta um usuário especifico"
+      description: ""
+      operationId: "getUser"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID do usuário a ser consultado"
+        required: true
+        type: "string"
+        format: "string"
+      responses:
+        "200":
+          description: "Objeto do usuário procurado"
+        "403":
+          description: "Acesso Negado"
+    put:
+      tags:
+      - "User"
+      summary: "Adicionar um novo usuário"
+      operationId: "putUser"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID do usuário a ser atualizado"
+        required: true
+        type: "string"
+        format: "string"
+      - in: "body"
+        name: "body"
+        description: "Usuário a ser cadastrado"
+        required: true
+        schema:
+          $ref: "#/definitions/User"
+      responses:
+        "200":
+          description: "Usuário atualizado com sucesso"
+        "403":
+          description: "Acesso Negado"
+    patch:
+      tags:
+      - "User"
+      summary: "Adicionar um novo usuário"
+      operationId: "patchUser"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID do usuário a ser atualizado"
+        required: true
+        type: "string"
+        format: "string"
+      - in: "body"
+        name: "body"
+        description: "Usuário a ser cadastrado"
+        required: true
+        schema:
+          $ref: "#/definitions/User"
+      responses:
+        "200":
+          description: "Usuário atualizado com sucesso"
+        "403":
+          description: "Acesso Negado"
+    delete:
+      tags:
+      - "User"
+      summary: "Deletar um usuário"
+      operationId: "deleteUser"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID do usuário a ser deletado"
+        required: true
+        type: "string"
+        format: "string"
+      responses:
+        "200":
+          description: "Usuário deletado com sucesso"
+        "403":
+          description: "Acesso Negado"
   /Vocabulario:
     post:
       tags:
@@ -174,6 +296,23 @@ securityDefinitions:
     in: "header"
     
 definitions:
+  User:
+    type: "object"
+    properties:
+      id: 
+        type: "string"
+      name: 
+        type:  "string"
+      type: 
+        type:  "string"
+      active: 
+        type:  "boolean"
+      password: 
+        type:  "string"
+      gender: 
+        type:  "string"
+      birth: 
+        type:  "string"
   Vocabulario:
     type: "object"
     properties:
