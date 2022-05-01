@@ -1,0 +1,220 @@
+swagger: "2.0"
+info:
+  description: "A idéia baseia-se na construção de um dispositivo Arduino que auxiliará as pessoas com deficiências auditivas a treinarem a fala através de simulação das vibrações das palavras que são feitas pelas cordas vocais do ser humano."
+  version: "1.0.0"
+  title: "TDVE - Teaching-Directed Vibration Emitter"
+  termsOfService: "http://??????.??/terms/"
+  contact:
+    email: "tdve@hotmail.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "tdve.swagger.io"
+basePath: "/v2"
+tags:
+  
+- name: "Plano_de_Estudo"
+  description: "Armazenamos as palavras por listas de acordo com o grupo a quem pertencem e as reproduzimos como um plano estudo aos usuários"
+  
+schemes:
+- "https"
+- "http"
+paths:
+  /Plano_de_Estudo:
+    post:
+      tags:
+      - "Plano_de_Estudo"
+      summary: "Adicionar um novo plano de estudos"
+      description: ""
+      operationId: "addPlano"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "O plano de estudo será adicionado ao Banco de Dados"
+        required: true
+        schema:
+          $ref: "#/definitions/Plano_de_Estudo"
+      responses:
+        "200":
+          description: "Sucesso!"
+        "405":
+          description: "Invalid input"
+      security:
+      - tdvemachine_auth:
+        - "write:Plano_de_Estudo"
+        - "read:Plano_de_Estudo"
+    put:
+      tags:
+      - "Plano_de_Estudo"
+      summary: "Atualizar um Plano de Estudos"
+      description: ""
+      operationId: "AlterarPlanoEstudo"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Novo plano de estudos será adicionada a base"
+        required: true
+        schema:
+          $ref: "#/definitions/Plano_de_Estudo"
+      responses:
+        "200":
+          description: "Sucesso!"
+        "405":
+          description: "Validation exception"
+      security:
+      - tdvemachine_auth:
+        - "write:Plano_de_Estudo"
+        - "read:Plano_de_Estudo"
+  /Plano_de_Estudo/{P_Estudo_Id}:
+    get:
+      tags:
+      - "Plano_de_Estudo"
+      summary: "Encontrar o Plano de Estudo através do ID"
+      description: "Retornar o Plano de Estudo"
+      operationId: "getById"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "P_Estudo_Id"
+        in: "path"
+        description: "ID do Plano de Estudo"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "Sucesso"
+          schema:
+            $ref: "#/definitions/Plano_de_Estudo"
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "Plano de estudo não encontrada"
+      security:
+      - api_key: []
+    put:
+      tags:
+      - "Plano_de_Estudo"
+      summary: "Atualizar / Adicionar Plano de Estudo me um formulario"
+      description: ""
+      operationId: "updateWithForm"
+      consumes:
+      - "application/x-www-form-urlencoded"
+      - "multipart/form-data"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "P_Estudo_Id"
+        in: "path"
+        description: "ID do plano de estudo a ser atualizado"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "P_Estudo_Palavras"
+        in: "formData"
+        description: "Atualiza as palavras"
+        required: true
+        format: "array"
+        items:
+          type: string
+        type: "file"       
+      - name: "P_Estudo_Desc"
+        in: "formData"
+        description: "Atualiza a descrição do plano de estudo"
+        required: false
+        type: "string"
+      - name: "Dificuldade"
+        in: "formData"
+        description: "Atualiza a dificuldade do plano de estudo"
+        required: false
+        type: "string"
+      responses:
+        "200":
+          description: "Sucesso!"
+        "405":
+          description: "Invalid input"
+      security:
+      - tdvemachine_auth:
+        - "write:Plano_de_Estudo"
+        - "read:Plano_de_Estudo"
+    delete:
+      tags:
+      - "Plano_de_Estudo"
+      summary: "Deletar um Plano de Estudo"
+      description: ""
+      operationId: "deletarPlanoEstudo"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "api_key"
+        in: "header"
+        required: false
+        type: "string"
+      - name: "P_Estudo_Id"
+        in: "path"
+        description: "Plano de Estudo a ser deletada"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "Sucesso!"
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "Plano de Estudo não encontrada"
+      security:
+      - tdvemachine_auth:
+        - "write:Plano_de_Estudo"
+        - "read:Plano_de_Estudo"
+
+securityDefinitions:
+  tdvemachine_auth:
+    type: "oauth2"
+    authorizationUrl: "http://tdve.swagger.io/oauth/dialog"
+    flow: "implicit"
+    scopes:
+      write:Plano_de_Estudo: "insere novos planos de estudo na aplicacao"
+      read:Plano_de_Estudo: "le os planos de estudos requeridos requeridas"
+  api_key:
+    type: "apiKey"
+    name: "api_key"
+    in: "header"
+    
+definitions:
+  Plano_de_Estudo:
+    type: "object"
+    properties:
+      P_Estudo_Id:
+        type: "integer"
+      P_Estudo_Desc:
+        type: "string"
+      P_Estudo_Palavras:
+        type: "array"
+        items:
+          type: string
+      Dificuldade:
+        type: "string"
+    xml:
+      name: "Plano_de_Estudo"
+  ApiResponse:
+    type: "object"
+    properties:
+      code:
+        type: "integer"
+        format: "int32"
+      type:
+        type: "string"
+      message:
+        type: "string"
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"
