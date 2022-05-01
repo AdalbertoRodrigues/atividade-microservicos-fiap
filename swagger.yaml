@@ -19,6 +19,9 @@ tags:
 - name: "Vocabulario"
   description: "Base de palavras ou frases que serao aprendidas pelos alunos"
   
+- name: "Log"
+  description: "Logs da aplicação"
+  
 schemes:
 - "https"
 - "http"
@@ -142,6 +145,43 @@ paths:
           description: "Usuário deletado com sucesso"
         "403":
           description: "Acesso Negado"
+  /Log:
+    get:
+      tags:
+      - "Log"
+      summary: "Consulta de logs"
+      operationId: "getLogs"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "Lista de logs"
+        "403":
+          description: "Acesso Negado"
+    post:
+      tags:
+      - "Log"
+      summary: "Registro de log"
+      operationId: "postLog"
+      consumes:
+      - "applicaion/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: body
+        name: "body"
+        description: ""
+        required: true
+        schema:
+          $ref: "#/definitions/Log"
+      responses:
+        "200":
+          description: "Log salvo com sucesso"
+        "403":
+          description: "Acesso Negado"
+      
   /Vocabulario:
     post:
       tags:
@@ -312,6 +352,13 @@ definitions:
       gender: 
         type:  "string"
       birth: 
+        type:  "string"
+  Log:
+    type: "object"
+    properties:
+      text: 
+        type: "string"
+      source: 
         type:  "string"
   Vocabulario:
     type: "object"
