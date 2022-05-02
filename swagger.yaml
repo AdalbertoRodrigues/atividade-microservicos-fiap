@@ -22,6 +22,12 @@ tags:
 - name: "Log"
   description: "Logs da aplicação"
   
+- name: "PalavraAprendida"
+  description: "Palavras aprendidas apendidas pela aplicação"
+  
+- name: "Ranking"
+  description: "Ranking dos usuários da aplicação"
+  
 schemes:
 - "https"
 - "http"
@@ -321,7 +327,196 @@ paths:
       - tdvemachine_auth:
         - "write:vocabulario"
         - "read:vocabulario"
-
+        
+  /PalavraAprendida:
+    post:
+      tags:
+      - "PalavraAprendida"
+      summary: "Adicionar uma nova palavra a base de palavras"
+      description: "Adicionar a base de dados a palavra nova aprendida"
+      operationId: "addPalavraAprendida"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Palavra precisa ser adicionada na base de dados"
+        required: true
+        schema:
+          $ref: "#/definitions/PalavraAprendida"
+      responses:
+        "200":
+          description: "Success"
+        "403":
+          description: "Invalid Access"
+        "405":
+          description: "Invalid input"
+      security:
+      - tdvemachine_auth:
+        - "write:PalavraAprendida"
+        - "read:PalavraAprendida"
+    put:
+      tags:
+      - "PalavraAprendida"
+      summary: "Atualizar a palavra aprendida"
+      description: "Atualizar a palavra aprendida"
+      operationId: "AlterarPalavraAprendida"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Nova palavra precisa ser adicionada a base do usuario"
+        required: true
+        schema:
+          $ref: "#/definitions/PalavraAprendida"
+      responses:
+        "200":
+          description: "Success"
+        "403":
+          description: "Invalid Access"
+        "405":
+          description: "Invalid input"
+      security:
+      - tdvemachine_auth:
+        - "write:PalavraAprendida"
+        - "read:PalavraAprendida"
+  /PalavraAprendida/{palavraaprendidaId}:
+    get:
+      tags:
+      - "PalavraAprendida"
+      summary: "Encontrar palavra pelo ID"
+      description: "Retornar uma unica palavra"
+      operationId: "getWordLearnById"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "palavraaprendidaId"
+        in: "path"
+        description: "ID da palavra aprendida retornada"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/PalavraAprendida"
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "Palavra não encontrada"
+      security:
+      - api_key: []
+      
+  /Ranking:
+    get:
+      tags:
+      - "Ranking"
+      summary: "Ranking por usuario"
+      description: "Apresentar Ranking do Usuário"
+      operationId: "getRanking"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "successful operation"
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "Palavra não encontrada"
+      security:
+      - api_key: []
+    post:
+      tags:
+      - "Ranking"
+      summary: "Adicionar um novo Ranking ao perfil do usuário"
+      description: "Adicionar um novo Ranking ao perfil do usuário"
+      operationId: "addRanking"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Ranking do usuário"
+        required: true
+        schema:
+          $ref: "#/definitions/Ranking"
+      responses:
+        "200":
+          description: "Success"
+        "403":
+          description: "Invalid Access"
+        "405":
+          description: "Invalid input"
+      security:
+      - tdvemachine_auth:
+        - "write:Ranking"
+        - "read:Ranking"
+    put:
+      tags:
+      - "Ranking"
+      summary: "Atualizar o novo Ranking atribuido ao usuário"
+      description: "Atualizar o novo Ranking atribuido ao usuário"
+      operationId: "AtualizarRanking"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Atualizar o novo Ranking atribuido ao usuário"
+        required: true
+        schema:
+          $ref: "#/definitions/Ranking"
+      responses:
+        "200":
+          description: "Success"
+        "403":
+          description: "Invalid Access"
+        "405":
+          description: "Invalid input"
+      security:
+      - tdvemachine_auth:
+        - "write:Ranking"
+        - "read:Ranking"
+    delete:
+      tags:
+      - "Ranking"
+      summary: "Deletar Ranking"
+      operationId: "deleteRanking"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID do usuário"
+        required: true
+        type: "string"
+        format: "string"
+      - name: "IdRank"
+        in: "path"
+        description: "Nota Ranking"
+        required: true
+        type: "string"
+        format: "string"
+      responses:
+        "200":
+          description: "Success"
+        "403":
+          description: "Invalid Access"
+        "405":
+          description: "Invalid input"
+      security:
+      - tdvemachine_auth:
+        - "write:Ranking"
+        - "read:Ranking"
+          
 securityDefinitions:
   tdvemachine_auth:
     type: "oauth2"
@@ -330,6 +525,10 @@ securityDefinitions:
     scopes:
       write:vocabulario: "insere sugestoes de palavras novas na aplicacao"
       read:vocabulario: "le as palavras requeridas"
+      write:PalavraAprendida: "Insere sugestoes de palavras novas na aplicacao"
+      read:PalavraAprendida: "Consulta as palavras"
+      write:Ranking: "Insere Ranking do usuário"
+      read:Ranking: "Lê Ranking do usuário"
   api_key:
     type: "apiKey"
     name: "api_key"
@@ -374,6 +573,25 @@ definitions:
         default: false
     xml:
       name: "Vocabulario"
+  PalavraAprendida:
+    type: "object"
+    properties:
+      PalavraAprendidaID:
+        type: "integer"
+      PalavraSistema:
+        type: "string"
+    xml:
+      name: "PalavraAprendida"
+  Ranking:
+    type: "object"
+    properties:
+      Ranking:
+        type: "string"
+      PalavraSistema:
+        type: "string"
+    xml:
+      name: "Ranking"
+      
   ApiResponse:
     type: "object"
     properties:
